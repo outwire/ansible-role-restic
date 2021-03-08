@@ -35,16 +35,16 @@ The time and date specifications when create and prune will run. See [systemd do
 
 `restic_backup_name: restic backup` - Name for the backup
 
-`restic_execution_parallel: true` - Parallel backup creation
-`restic_execution_retry_count: 10` - Retry count
+`restic_execution_parallel: true` - Parallel backup creation  
+`restic_execution_retry_count: 10` - Retry count  
 `restic_execution_retry_backoff: 1:00 exponential` - Retry strategies (static, linear, exponential)
 
 `restic_environment_variables: []` - Environment variables for restic, see [restic documentation](https://restic.readthedocs.io/en/stable/040_backup.html#environment-variables) for all available options
 
-`restic_exclude_patterns: []` - Patterns to exclude from backup
+`restic_exclude_patterns: []` - Patterns to exclude from backup  
 `restic_exclude_files: []` - Files to exclude from backup
 
-`restic_pre_hooks: []` - Run command before the backup
+`restic_pre_hooks: []` - Run command before the backup  
 `restic_post_hooks: []` - Run command after the backup
 
 ```yaml
