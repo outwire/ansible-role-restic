@@ -1,0 +1,30 @@
+---
+name: ci
+
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - debian10
+          - ubuntu2004
+          - fedora33
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible ansible-lint molecule[docker] yamllint
+
+      - name: Run molecule tests.
+        run: molecule test
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}

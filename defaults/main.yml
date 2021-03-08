@@ -16,7 +16,7 @@ restic_execution_retry_backoff: 1:00 exponential
 
 ## environment
 #restic_password:
-restic_environment_variables: []
+restic_environment_variables: {}
 
 ## backup
 #restic_source_directories:
