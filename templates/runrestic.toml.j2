@@ -1,0 +1,98 @@
+name = "{{ restic_backup_name }}"
+
+repositories = [
+    {% if restic_repository is iterable and (restic_repository is not string and restic_repository is not mapping) %}
+    {% for repo in restic_repository %}
+    "{{ repo }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    {% else %}
+    "{{ restic_repository }}"
+    {% endif %}
+    ]
+
+[execution]
+parallel = {{ restic_execution_parallel | bool | lower }}
+retry_count = {{ restic_execution_retry_count }}
+retry_backoff = "{{ restic_execution_retry_backoff }}"
+
+[environment]
+RESTIC_PASSWORD = "{{ restic_password }}"
+
+{% for key, value in restic_environment_variables.items() %}
+{{ key }} = "{{ value }}"
+{% endfor %}
+
+[backup]
+sources = [
+    {% for dir in restic_source_directories %}
+    "{{ dir }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+exclude_patterns = [
+    {% for dir in restic_exclude_patterns %}
+    "{{ dir }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+exclude_files = [
+    {% for file in restic_exclude_files %}
+    "{{ file }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+pre_hooks = [
+    {% for hook in restic_pre_hooks %}
+    "{{ hook }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+post_hooks = [
+    {% for hook in restic_post_hooks %}
+    "{{ hook }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+[prune]
+{% if restic_retention_policy.keep_last is defined %}
+keep-last = {{ restic_retention_policy.keep_last }}
+{% endif %}
+{% if restic_retention_policy.keep_hourly is defined %}
+keep-hourly = {{ restic_retention_policy.keep_hourly }}
+{% endif %}
+{% if restic_retention_policy.keep_daily is defined %}
+keep-daily = {{ restic_retention_policy.keep_daily }}
+{% endif %}
+{% if restic_retention_policy.keep_weekly is defined %}
+keep-weekly = {{ restic_retention_policy.keep_weekly }}
+{% endif %}
+{% if restic_retention_policy.keep_monthly is defined %}
+keep-monthly = {{ restic_retention_policy.keep_monthly }}
+{% endif %}
+{% if restic_retention_policy.keep_yearly is defined %}
+keep-yearly = {{ restic_retention_policy.keep_yearly }}
+{% endif %}
+{% if restic_retention_policy.keep_tag is defined %}
+keep-tag = {{ restic_retention_policy.keep_tag }}
+{% endif %}
+{% if restic_retention_policy.keep_within is defined %}
+keep-within = {{ restic_retention_policy.keep_within }}
+{% endif %}
+{% if restic_retention_policy.group_by is defined %}
+group-by = {{ restic_retention_policy.group_by }}
+{% endif %}
+
+[check]
+checks = [
+    {% for check in restic_checks %}
+    "{{ check }}" {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+
+{% if restic_metrics_prometheus %}
+[metrics.prometheus]
+path = "{{ restic_metrics_prometheus_path }}"
+{% if restic_metrics_prometheus_password_replacement is defined %}
+password_replacement = "{{ restic_metrics_prometheus_password_replacement }}"
+{% endif %}
+{% endif %}

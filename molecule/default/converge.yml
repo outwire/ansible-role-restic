@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    restic_repository: /srv/restic-repo
+    restic_password: changeme
+    restic_source_directories:
+      - /var/www
+      - /etc
+  tasks:
+    - name: "Include ansible-role-restic"
+      include_role:
+        name: "ansible-role-restic"

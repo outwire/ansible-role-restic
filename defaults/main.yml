@@ -1,0 +1,43 @@
+---
+restic_version: 0.12.0
+runrestic_version: 0.5.20
+
+# systemd
+restic_systemd_timer_oncalendar: daily # https://www.freedesktop.org/software/systemd/man/systemd.time.html
+
+# runrestic.toml
+restic_backup_name: restic backup
+#restic_repository:
+
+## execution
+restic_execution_parallel: true
+restic_execution_retry_count: 10
+restic_execution_retry_backoff: 1:00 exponential
+
+## environment
+#restic_password:
+restic_environment_variables: []
+
+## backup
+#restic_source_directories:
+restic_exclude_patterns: []
+restic_exclude_files: []
+restic_pre_hooks: []
+restic_post_hooks: []
+
+## prune
+restic_retention_policy:
+  keep_last: 3
+  keep_daily: 7
+  keep_weekly: 4
+  keep_monthly: 6
+
+## checks
+restic_checks: []
+#  - check-unused
+#  - read-data
+
+## metrics
+restic_metrics_prometheus: false
+restic_metrics_prometheus_path: /var/lib/node_exporter/textfile_collector/runrestic.prom
+restic_metrics_prometheus_password_replacement: XXX
