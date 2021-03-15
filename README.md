@@ -1,6 +1,10 @@
 Ansible Role: restic
 =========
 
+![lint](https://github.com/outwire/ansible-role-restic/workflows/ci/badge.svg)
+![quality](https://img.shields.io/ansible/quality/53614)
+![license](https://img.shields.io/github/license/outwire/ansible-role-restic)
+
 Set up backups using restic and runrestic.
 
 Role Variables
