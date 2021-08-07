@@ -1,5 +1,5 @@
 ---
-restic_version: 0.12.0
+restic_version: 0.12.1
 runrestic_version: 0.5.23
 
 # systemd
